@@ -1,49 +1,65 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+
+// Import the necessary utility to fetch your blog posts
+import { getCollection } from "astro:content";
+import PostCard from "../components/PostCard.astro"; // Assuming you have a simple component for post summaries
+
+// Fetch all posts and sort them by date (newest first)
+const allPosts = await getCollection("blog");
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <main class="container">
+      <section class="hero">
+        <h1>算法之旅航海志</h1>
+
+        <p>欢迎来到我的算法小站！</p>
+        <p class="subtitle">
+          欢迎深入探索问题解决之道。在这里，您可以找到针对竞技编程和实际挑战的详细报告、代码实现和复杂度分析。
+        </p>
+
+        <p>Welcome to my algorithm solutions blog!</p>
+        <p class="subtitle">
+          Welcome to a deep dive into problem-solving. Find detailed reports,
+          code implementations, and complexity analysis for competitive
+          programming and real-world challenges.
+        </p>
+      </section>
+
+      <hr />
+
+      <section class="about-me">
+        <h2>
+          <span class="icon">&#128104;&#8205;&#128187;</span> About This Blog
+        </h2>
+        <p>
+          本博客致力于记录各种算法背后的思路、实现细节和理论基础。
+          我的目标是创建清晰、可复现的报告，为其他开发者和算法竞赛选手提供有用的参考资料。
+          经常涵盖的主题包括动态规划、图论、数据结构和复杂度分析。
+        </p>
+        <p>
+          This blog is dedicated to documenting the thought process,
+          implementation details, and theoretical foundations behind various
+          algorithms. My goal is to create clear, reproducible reports that
+          serve as useful references for fellow developers and competitive
+          programmers. Topics frequently covered include Dynamic Programming,
+          Graph Theory, Data Structures, and Complexity Analysis.
+        </p>
+      </section>
+    </main>
+    <Footer />
+  </body>
 </html>

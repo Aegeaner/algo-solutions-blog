@@ -1,63 +1,77 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import AboutHeroImage from "../assets/blog-placeholder-about.jpg";
+import Layout from "../layouts/BlogPost.astro";
 ---
 
 <Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
+  title="About Me"
+  description="Lorem ipsum dolor sit amet"
+  pubDate={new Date("December 25 2025")}
+  heroImage={AboutHeroImage}
 >
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+  <section class="content-section">
+    <div class="language-section chinese">
+      <p>
+        我是一名算法竞赛的 <strong>入门爱好者</strong>，目前主要活跃在
+        AtCoder、NowCoder (牛客)、Codeforces 和 LeetCode 等平台的周赛中。
+      </p>
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+      <p>
+        这个博客是我进行 <strong>算法学习总结和存档</strong> 的业余空间。我的核心目标是：
+      </p>
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+      <ul>
+        <li>
+          <strong>赛后复盘</strong>：
+          记录每一次算法竞赛的学习进度，并提供详细、步骤清晰的算法解题报告。
+        </li>
+        <br />
+        <li>
+          <strong>知识共享</strong>：
+          将这些学习成果分享给其他算法爱好者，希望能够为大家提供清晰、有价值的解题报告。
+        </li>
+      </ul>
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+      <p class="feedback-note">
+        算法之路漫漫，我非常欢迎各位提出建议和反馈。如果您对任何解法有更优的想法，或者发现任何错误，请随时与我联系！
+      </p>
+    </div>
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
+    <hr aria-hidden="true" />
+
+    <div class="language-section english">
+      <p>
+        I am an algorithm competition enthusiast, primarily participating in
+        weekly contests on platforms like AtCoder, NowCoder, Codeforces, and
+        LeetCode.
+      </p>
+
+      <p>
+        This blog serves as my personal space for tracking my progress through
+        weekly contests and archiving detailed, step-by-step problem solutions.
+        My core goals are:
+      </p>
+
+      <ul>
+        <li>
+          <strong>Post-contest Debrief</strong>: To meticulously document my
+          problem-solving approach, code implementations, and complexity
+          analysis for future review.
+        </li>
+        <br />
+        <li>
+          <strong>Knowledge Sharing</strong>: To share these learning reports
+          with fellow algorithm enthusiasts, aiming to provide clear and
+          valuable insights into various solutions.
+        </li>
+      </ul>
+
+      <p class="feedback-note">
+        The journey in algorithms is ongoing, and I highly welcome any
+        suggestions or feedback. If you have a more efficient approach to any
+        solution or spot any errors, please feel free to reach out and let me
+        know!
+      </p>
+    </div>
+  </section>
 </Layout>
