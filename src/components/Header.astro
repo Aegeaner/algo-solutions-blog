@@ -2,6 +2,7 @@
 import { SITE_TITLE } from "../consts";
 import HeaderLink from "./HeaderLink.astro";
 const base = import.meta.env.BASE_URL;
+const isGitHubPages = Boolean(import.meta.env.GITHUB_PAGES);
 
 const currentPath = Astro.url.pathname;
 const currentLang = currentPath.startsWith("/en") ? "en" : "zh";
@@ -35,9 +36,13 @@ if (currentPath === "/blog" || currentPath === "/en/blog") {
       <HeaderLink href="/" currentLang={currentLang}>Home</HeaderLink>
       <HeaderLink href="/blog" currentLang={currentLang}>Blog</HeaderLink>
       <HeaderLink href="/about" currentLang={currentLang}>About</HeaderLink>
-      <HeaderLink href={switchLangUrl} currentLang={currentLang}>
-        {currentLang === "en" ? "中文" : "English"}
-      </HeaderLink>
+      {
+        !isGitHubPages && (
+          <HeaderLink href={switchLangUrl} currentLang={currentLang}>
+            {currentLang === "en" ? "中文" : "English"}
+          </HeaderLink>
+        )
+      }
     </div>
     <div class="social-links">
       <a href="https://www.nowcoder.com/users/552530" target="_blank">
