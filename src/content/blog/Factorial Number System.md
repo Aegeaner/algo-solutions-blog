@@ -5,7 +5,7 @@ pubDate: 'Nov 17 2025'
 heroImage: '../../assets/blog-placeholder-1.jpg'
 ---
 
-## 阶乘进制 (Factorial Number System) 原理介绍
+## 阶乘进制 (FNS) 原理介绍
 
 阶乘进制，又称为 **Lehmer 码 (Lehmer code)**，是一种**混合基数系统 (Mixed Radix System)**，它使用阶乘作为每一位的权值（基数），而不是像传统的 $n$ 进制（如十进制、二进制）那样使用 $n$ 的幂作为权值。
 
@@ -54,7 +54,7 @@ $$\mathbf{0 \le c_i \le i}$$
 
 ---
 
-## 关于**阶乘进制（Factorial Number System, FNS）**的严谨数学证明。
+## 阶乘进制（Factorial Number System, FNS）的严谨数学证明
 
 我们需要证明两件事：**存在性 (Existence)** 和 **唯一性 (Uniqueness)**。
 
