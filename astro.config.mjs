@@ -36,5 +36,7 @@ export default defineConfig({
   build: {
     // 内联小资源
     inlineStylesheets: 'auto',
-  }
+  },
+  output: isGitHubPages ? 'static' : undefined,
+  trailingSlash: isGitHubPages ? 'always' : undefined,
 });
