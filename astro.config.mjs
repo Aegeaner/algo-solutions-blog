@@ -2,7 +2,7 @@
 
 import sitemap from '@astrojs/sitemap';
 import remarkMath from 'remark-math';
-import rehypeKatex from 'rehype-katex';
+import rehypeMathjax from 'rehype-mathjax';
 import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
@@ -28,7 +28,7 @@ export default defineConfig({
   },
   markdown: {
     remarkPlugins: [remarkMath],
-    rehypePlugins: [rehypeKatex],
+    rehypePlugins: [rehypeMathjax],
   },
   integrations: [sitemap()],
   // 预加载重要资源
