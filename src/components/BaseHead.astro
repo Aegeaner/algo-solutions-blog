@@ -31,8 +31,17 @@ const { title, description, image = FallbackImage } = Astro.props;
 <meta name="generator" content={Astro.generator} />
 
 <!-- Font preloads -->
-<link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
-<link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin />
+<!-- Arvo -->
+<link rel="preload" href="/fonts/Arvo.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/Arvo-Bold.woff2" as="font" type="font/woff2" crossorigin />
+
+<!-- TeX Gyre Heros Condensed -->
+<link rel="preload" href="/fonts/TeXGyreHerosCondensed-Regular.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/TeXGyreHerosCondensed-Bold.woff2" as="font" type="font/woff2" crossorigin />
+
+<!-- JetBrains Mono -->
+<link rel="preload" href="/fonts/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/JetBrainsMono-Bold.woff2" as="font" type="font/woff2" crossorigin />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
