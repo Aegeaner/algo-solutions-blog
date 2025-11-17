@@ -18,8 +18,23 @@ export default defineConfig({
   base: isGitHubPages
     ? '/algo-solutions-blog/'  // GitHub Pages 非根仓库必须加仓库名
     : '/',             // Cloudflare Pages 根域名部署，保持 /
-  
+  i18n: {
+    defaultLocale: "zh",
+    locales: ["zh", "en"],
+    routing: {
+      prefixDefaultLocale: false
+    }
+  },
   markdown: {
     syntaxHighlight: 'prism',
   },
+  integrations: [sitemap()],
+  // 预加载重要资源
+  prefetch: true,
+  // 压缩 HTML
+  compressHTML: true,
+  build: {
+    // 内联小资源
+    inlineStylesheets: 'auto',
+  }
 });

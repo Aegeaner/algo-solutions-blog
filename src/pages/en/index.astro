@@ -1,0 +1,32 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <main class="container">
+      <section class="about-me">
+        <h2>
+          <span class="icon">&#128104;&#8205;&#128187;</span> About This Blog
+        </h2>
+        <p>
+          This blog is dedicated to documenting the thought process,
+          implementation details, and theoretical foundations behind various
+          algorithms. My goal is to create clear, reproducible reports that
+          serve as useful references for fellow developers and competitive
+          programmers. Topics frequently covered include Dynamic Programming,
+          Graph Theory, Data Structures, and Complexity Analysis.
+        </p>
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>

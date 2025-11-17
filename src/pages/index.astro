@@ -3,25 +3,19 @@ import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
-
-// Import the necessary utility to fetch your blog posts
-import { getCollection } from "astro:content";
-import PostCard from "../components/PostCard.astro"; // Assuming you have a simple component for post summaries
-
-// Fetch all posts and sort them by date (newest first)
-const allPosts = await getCollection("blog");
-const sortedPosts = allPosts.sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="zh">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
+
   <body>
     <Header />
+
     <main class="container">
       <section class="hero">
         <h1>算法之旅航海志</h1>
@@ -29,13 +23,6 @@ const sortedPosts = allPosts.sort(
         <p>欢迎来到我的算法小站！</p>
         <p class="subtitle">
           欢迎深入探索问题解决之道。在这里，您可以找到针对竞技编程和实际挑战的详细报告、代码实现和复杂度分析。
-        </p>
-
-        <p>Welcome to my algorithm solutions blog!</p>
-        <p class="subtitle">
-          Welcome to a deep dive into problem-solving. Find detailed reports,
-          code implementations, and complexity analysis for competitive
-          programming and real-world challenges.
         </p>
       </section>
 
@@ -49,14 +36,6 @@ const sortedPosts = allPosts.sort(
           本博客致力于记录各种算法背后的思路、实现细节和理论基础。
           我的目标是创建清晰、可复现的报告，为其他开发者和算法竞赛选手提供有用的参考资料。
           经常涵盖的主题包括动态规划、图论、数据结构和复杂度分析。
-        </p>
-        <p>
-          This blog is dedicated to documenting the thought process,
-          implementation details, and theoretical foundations behind various
-          algorithms. My goal is to create clear, reproducible reports that
-          serve as useful references for fellow developers and competitive
-          programmers. Topics frequently covered include Dynamic Programming,
-          Graph Theory, Data Structures, and Complexity Analysis.
         </p>
       </section>
     </main>
