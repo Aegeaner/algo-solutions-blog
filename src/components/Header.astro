@@ -4,17 +4,27 @@ import HeaderLink from "./HeaderLink.astro";
 const base = import.meta.env.BASE_URL;
 
 const currentPath = Astro.url.pathname;
-const isEnglish = currentPath.startsWith("/en");
+const currentLang = currentPath.startsWith("/en") ? "en" : "zh";
 
-// 生成切换链接
-let switchLangUrl;
-if (currentPath.includes("/blog")) {
-  // 博客相关页面切换语言时回到首页
-  switchLangUrl = isEnglish ? "/" : "/en/";
-} else if (isEnglish) {
-  switchLangUrl = currentPath.replace("/en", "") || "/";
-} else {
-  switchLangUrl = "/en" + currentPath;
+// 语言切换 URL
+const pathMap: Record<string, string> = {
+  "/": "/en/",
+  "/en/": "/",
+  "/about": "/en/about",
+  "/en/about": "/about",
+  // 不在 map 中处理 /blog，让默认逻辑处理
+};
+
+// 生成语言切换 URL
+let switchLangUrl =
+  pathMap[currentPath] ||
+  (currentLang === "en"
+    ? currentPath.replace(/^\/en/, "") || "/"
+    : "/en" + currentPath);
+
+// 特殊处理 /blog：不加 /en 前缀
+if (currentPath === "/blog" || currentPath === "/en/blog") {
+  switchLangUrl = "/blog";
 }
 ---
 
@@ -22,12 +32,12 @@ if (currentPath.includes("/blog")) {
   <nav>
     <h2><a href="/">{SITE_TITLE}</a></h2>
     <div class="internal-links">
-      <HeaderLink href={`${base}`}>Home</HeaderLink>
-      <HeaderLink href={`/blog`}>Blog</HeaderLink>
-      <HeaderLink href={`${base}about`}>About</HeaderLink>
-      <HeaderLink href={switchLangUrl}
-        >{isEnglish ? "中文" : "English"}</HeaderLink
-      >
+      <HeaderLink href="/" currentLang={currentLang}>Home</HeaderLink>
+      <HeaderLink href="/blog" currentLang={currentLang}>Blog</HeaderLink>
+      <HeaderLink href="/about" currentLang={currentLang}>About</HeaderLink>
+      <HeaderLink href={switchLangUrl} currentLang={currentLang}>
+        {currentLang === "en" ? "中文" : "English"}
+      </HeaderLink>
     </div>
     <div class="social-links">
       <a href="https://www.nowcoder.com/users/552530" target="_blank">
