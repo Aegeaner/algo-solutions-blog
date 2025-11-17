@@ -1,51 +1,27 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 
-type Props = HTMLAttributes<"a"> & {
-  currentLang?: string;
-};
-const { href, class: className, currentLang, ...props } = Astro.props;
+type Props = HTMLAttributes<"a">;
 
-// active 判断
+const { href, class: className, ...props } = Astro.props;
+
+// 当前路径
 const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
 const subpath = pathname.match(/[^\/]+/g);
 const isActive = href === pathname || href === "/" + (subpath?.[0] || "");
 
-// 自动语言前缀函数
-const withLang = (url: string) => {
-  // 外链保持原样
-  if (url.startsWith("http")) return url;
-
-  // 特殊页面：/blog 中英文共用
-  if (url === "/blog") return "/blog";
-
-  if (currentLang === "en") {
-    if (url.startsWith("/en")) return url;
-    return "/en" + url;
-  }
-
-  return url;
-};
-
-let hrefStr: string;
-
-if (!href) {
-  hrefStr = "/";
-} else if (typeof href === "string") {
-  hrefStr = href;
-} else if (href instanceof URL) {
-  hrefStr = href.toString();
-} else {
-  hrefStr = "/";
-}
-
-const finalHref = withLang(hrefStr);
+// 自动拼 base
+const base = import.meta.env.BASE_URL;
+const hrefStr =
+  typeof href === "string" ? href : href instanceof URL ? href.toString() : "/";
+const finalHref = hrefStr.startsWith("http")
+  ? href
+  : `${base}${hrefStr.replace(/^\/+/, "")}`;
 ---
 
 <a href={finalHref} class:list={[className, { active: isActive }]} {...props}>
   <slot />
 </a>
-
 <style>
   a {
     display: inline-block;
