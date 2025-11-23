@@ -15,6 +15,8 @@ interface Props {
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const { title, description, image = FallbackImage } = Astro.props;
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <!-- Global Metadata -->
@@ -32,16 +34,16 @@ const { title, description, image = FallbackImage } = Astro.props;
 
 <!-- Font preloads -->
 <!-- Arvo -->
-<link rel="preload" href="/fonts/Arvo.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" href="/fonts/Arvo-Bold.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={base + "fonts/Arvo.woff2"} as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={base + "fonts/Arvo-Bold.woff2"} as="font" type="font/woff2" crossorigin />
 
 <!-- TeX Gyre Heros Condensed -->
-<link rel="preload" href="/fonts/TeXGyreHerosCondensed-Regular.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" href="/fonts/TeXGyreHerosCondensed-Bold.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={base + "fonts/TeXGyreHerosCondensed-Regular.woff2"} as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={base + "fonts/TeXGyreHerosCondensed-Bold.woff2"} as="font" type="font/woff2" crossorigin />
 
 <!-- JetBrains Mono -->
-<link rel="preload" href="/fonts/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" href="/fonts/JetBrainsMono-Bold.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={base + "fonts/JetBrainsMono-Regular.woff2"} as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={base + "fonts/JetBrainsMono-Bold.woff2"} as="font" type="font/woff2" crossorigin />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
