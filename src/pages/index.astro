@@ -1,8 +1,19 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const base = import.meta.env.BASE_URL;
+function resolveHref(href: string) {
+  return href.startsWith("http") ? href : `${base}${href.replace(/^\/+/, "")}`;
+}
 ---
 
 <!doctype html>
@@ -14,21 +25,82 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		<style>
 			.hero {
 				text-align: center;
-				padding: 4rem 0;
+				padding: 6rem 0;
+				background: radial-gradient(circle at center, rgba(var(--gray-light), 0.5) 0%, transparent 70%);
+				margin-bottom: 2rem;
 			}
 			.hero h1 {
-				font-size: 3rem;
+				font-size: 3.5rem;
 				margin-bottom: 1rem;
+				letter-spacing: -1px;
 			}
 			.subtitle {
 				font-size: 1.25rem;
 				color: rgb(var(--gray));
 				max-width: 600px;
-				margin: 0 auto;
+				margin: 0 auto 2rem auto;
 				line-height: 1.6;
 			}
+			.cta-button {
+				display: inline-block;
+				background-color: var(--accent);
+				color: white;
+				padding: 0.8rem 2rem;
+				border-radius: 50px;
+				text-decoration: none;
+				font-weight: bold;
+				transition: background-color 0.2s ease, transform 0.2s ease;
+				box-shadow: 0 4px 6px rgba(var(--accent), 0.3);
+			}
+			.cta-button:hover {
+				background-color: var(--accent-dark);
+				transform: translateY(-2px);
+				text-decoration: none;
+			}
+			.section-title {
+				font-size: 2rem;
+				text-align: center;
+				margin: 3rem 0 2rem 0;
+			}
+			.recent-posts {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+				gap: 2rem;
+			}
+			.recent-post-card {
+				background: white;
+				border-radius: 12px;
+				padding: 1.5rem;
+				box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+				transition: transform 0.2s ease;
+				border: 1px solid rgba(var(--gray-light), 0.5);
+			}
+			.recent-post-card:hover {
+				transform: translateY(-4px);
+				box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+			}
+			.recent-post-card a {
+				text-decoration: none;
+				color: inherit;
+			}
+			.recent-post-card h3 {
+				margin: 0.5rem 0;
+				font-size: 1.25rem;
+				color: rgb(var(--black));
+			}
+			.recent-post-card .date {
+				color: rgb(var(--gray));
+				font-size: 0.875rem;
+			}
 			.about-me {
-				padding: 2rem 0;
+				padding: 4rem 0;
+				background: rgba(var(--gray-light), 0.2);
+				margin-top: 4rem;
+				border-radius: 12px;
+				text-align: center;
 			}
 			.icon {
 				margin-right: 0.5rem;
@@ -36,6 +108,9 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			@media (max-width: 720px) {
 				.hero h1 {
 					font-size: 2.5rem;
+				}
+				.hero {
+					padding: 4rem 0;
 				}
 			}
 		</style>
@@ -48,23 +123,40 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			<section class="hero">
 				<h1>算法之旅航海志</h1>
 
-				<p>欢迎来到我的算法小站！</p>
 				<p class="subtitle">
-					欢迎深入探索问题解决之道。在这里，您可以找到针对竞技编程和实际挑战的详细报告、代码实现和复杂度分析。
+					深入探索问题解决之道。在这里，您可以找到针对竞技编程和实际挑战的详细报告、代码实现和复杂度分析。
 				</p>
+				<a href={resolveHref("/blog")} class="cta-button">开始阅读</a>
 			</section>
 
-			<hr />
+			<section>
+				<h2 class="section-title">最新文章</h2>
+				<ul class="recent-posts">
+					{
+						posts.map((post) => (
+							<li class="recent-post-card">
+								<a href={resolveHref(`/blog/${post.id}/`)}>
+									<p class="date"><FormattedDate date={post.data.pubDate} /></p>
+									<h3>{post.data.title}</h3>
+									<p>{post.data.description}</p>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</section>
 
 			<section class="about-me">
 				<h2>
 					<span class="icon">&#128104;&#8205;&#128187;</span> 博客简介
 				</h2>
-				<p>
-					本博客致力于记录各种算法背后的思路、实现细节和理论基础。
-					我的目标是创建清晰、可复现的报告，为其他开发者和算法竞赛选手提供有用的参考资料。
-					经常涵盖的主题包括动态规划、图论、数据结构和复杂度分析。
-				</p>
+				<div style="max-width: 720px; margin: 0 auto; text-align: left; padding: 0 1rem;">
+					<p>
+						本博客致力于记录各种算法背后的思路、实现细节和理论基础。
+						我的目标是创建清晰、可复现的报告，为其他开发者和算法竞赛选手提供有用的参考资料。
+						经常涵盖的主题包括动态规划、图论、数据结构和复杂度分析。
+					</p>
+				</div>
 			</section>
 		</main>
 		<Footer />
