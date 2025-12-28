@@ -7,6 +7,14 @@ import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
+import placeholder1 from '../../assets/blog-placeholder-1.jpg';
+import placeholder2 from '../../assets/blog-placeholder-2.jpg';
+import placeholder3 from '../../assets/blog-placeholder-3.jpg';
+import placeholder4 from '../../assets/blog-placeholder-4.jpg';
+import placeholder5 from '../../assets/blog-placeholder-5.jpg';
+
+const placeholders = [placeholder1, placeholder2, placeholder3, placeholder4, placeholder5];
+
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
@@ -16,6 +24,17 @@ const base = import.meta.env.BASE_URL;
 function resolveHref(href: string | URL) {
 	const hrefStr = typeof href === 'string' ? href : href instanceof URL ? href.toString() : '/';
 	return hrefStr.startsWith('http') ? hrefStr : `${base}${hrefStr.replace(/^\/+/, '')}`;
+}
+
+function getCode(s: string) {
+	let hash = 0;
+	if (s.length === 0) return hash;
+	for (let i = 0; i < s.length; i++) {
+		const char = s.charCodeAt(i);
+		hash = ((hash << 5) - hash) + char;
+		hash = hash & hash;
+	}
+	return Math.abs(hash);
 }
 ---
 
@@ -106,19 +125,19 @@ function resolveHref(href: string | URL) {
 			<section>
 				<ul>
 					{
-						posts.map((post) => (
+						posts.map((post) => {
+							const targetImage = placeholders[getCode(post.id) % placeholders.length];
+							return (
 							<li>
 								<a href={resolveHref(`/blog/${post.id}/`)}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
+									<Image width={720} height={360} src={targetImage} alt="" />
 									<h4 class="title">{post.data.title}</h4>
 									<p class="date">
 										<FormattedDate date={post.data.pubDate} />
 									</p>
 								</a>
 							</li>
-						))
+						)})
 					}
 				</ul>
 			</section>

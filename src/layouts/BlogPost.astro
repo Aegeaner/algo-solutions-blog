@@ -1,101 +1,127 @@
 ---
-import { Image } from 'astro:assets';
-import type { CollectionEntry } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import Header from "../components/Header.astro";
 
-type Props = CollectionEntry<'blog'>['data'];
+import placeholder1 from '../assets/blog-placeholder-1.jpg';
+import placeholder2 from '../assets/blog-placeholder-2.jpg';
+import placeholder3 from '../assets/blog-placeholder-3.jpg';
+import placeholder4 from '../assets/blog-placeholder-4.jpg';
+import placeholder5 from '../assets/blog-placeholder-5.jpg';
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const placeholders = [placeholder1, placeholder2, placeholder3, placeholder4, placeholder5];
+
+type Props = CollectionEntry<"blog">["data"] & { id?: string };
+
+const { title, description, pubDate, updatedDate, heroImage, id } = Astro.props;
+
+function getCode(s: string) {
+    let hash = 0;
+    if (s.length === 0) return hash;
+    for (let i = 0; i < s.length; i++) {
+        const char = s.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+    }
+    return Math.abs(hash);
+}
+
+const targetImage = placeholders[getCode(id || title) % placeholders.length];
 ---
 
 <html lang="en">
-	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-				margin-bottom: 2rem;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1rem;
-				padding: 1rem 0;
-				text-align: center;
-				line-height: 1.2;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-				font-size: 2.5rem;
-			}
-			.date {
-				margin-bottom: 1rem;
-				color: rgb(var(--gray));
-				font-size: 1.1rem;
-			}
-			.last-updated-on {
-				font-style: italic;
-				font-size: 0.9rem;
-			}
-			hr {
-				border: none;
-				border-top: 1px solid rgb(var(--gray-light));
-				margin: 2rem auto;
-				width: 50%;
-			}
-		</style>
+  <head>
+    <BaseHead title={title} description={description} />
+    <style>
+      main {
+        width: calc(100% - 2em);
+        max-width: 100%;
+        margin: 0;
+      }
+      .hero-image {
+        width: 100%;
+        margin-bottom: 2rem;
+      }
+      .hero-image img {
+        display: block;
+        margin: 0 auto;
+        border-radius: 12px;
+        box-shadow: var(--box-shadow);
+      }
+      .prose {
+        width: 720px;
+        max-width: calc(100% - 2em);
+        margin: auto;
+        padding: 1em;
+        color: rgb(var(--gray-dark));
+      }
+      .title {
+        margin-bottom: 1rem;
+        padding: 1rem 0;
+        text-align: center;
+        line-height: 1.2;
+      }
+      .title h1 {
+        margin: 0 0 0.5em 0;
+        font-size: 2.5rem;
+      }
+      .date {
+        margin-bottom: 1rem;
+        color: rgb(var(--gray));
+        font-size: 1.1rem;
+      }
+      .last-updated-on {
+        font-style: italic;
+        font-size: 0.9rem;
+      }
+      hr {
+        border: none;
+        border-top: 1px solid rgb(var(--gray-light));
+        margin: 2rem auto;
+        width: 50%;
+      }
+    </style>
+	
+    <script 
+        id="MathJax-script" 
+        async 
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+  </head>
 
-		<script
-			id="MathJax-script"
-			async
-			src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-	</head>
-
-	<body>
-		<Header />
-		<main>
-			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
-				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<hr />
-					</div>
-					<slot />
-				</div>
-			</article>
-		</main>
-		<Footer />
-	</body>
+  <body>
+    <Header />
+    <main>
+      <article>
+        <div class="hero-image">
+          {
+            targetImage && (
+              <Image width={1020} height={510} src={targetImage} alt="" />
+            )
+          }
+        </div>
+        <div class="prose">
+          <div class="title">
+            <div class="date">
+              <FormattedDate date={pubDate} />
+              {
+                updatedDate && (
+                  <div class="last-updated-on">
+                    Last updated on <FormattedDate date={updatedDate} />
+                  </div>
+                )
+              }
+            </div>
+            <h1>{title}</h1>
+            <hr />
+          </div>
+          <slot />
+        </div>
+      </article>
+    </main>
+    <Footer />
+  </body>
 </html>
