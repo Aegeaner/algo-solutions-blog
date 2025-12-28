@@ -2,8 +2,8 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ "main" ]  # main 分支更新时自动发布
-  workflow_dispatch:       # 允许手动触发
+    branches: ['main'] # main 分支更新时自动发布
+  workflow_dispatch: # 允许手动触发
 
 permissions:
   contents: read

@@ -1,34 +1,31 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import type { HTMLAttributes } from 'astro/types';
 
-type Props = HTMLAttributes<"a">;
+type Props = HTMLAttributes<'a'>;
 
 const { href, class: className, ...props } = Astro.props;
 
 // 当前路径
-const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
+const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, '');
 const subpath = pathname.match(/[^\/]+/g);
-const isActive = href === pathname || href === "/" + (subpath?.[0] || "");
+const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
 
 // 自动拼 base
 const base = import.meta.env.BASE_URL;
-const hrefStr =
-  typeof href === "string" ? href : href instanceof URL ? href.toString() : "/";
-const finalHref = hrefStr.startsWith("http")
-  ? href
-  : `${base}${hrefStr.replace(/^\/+/, "")}`;
+const hrefStr = typeof href === 'string' ? href : href instanceof URL ? href.toString() : '/';
+const finalHref = hrefStr.startsWith('http') ? href : `${base}${hrefStr.replace(/^\/+/, '')}`;
 ---
 
 <a href={finalHref} class:list={[className, { active: isActive }]} {...props}>
-  <slot />
+	<slot />
 </a>
 <style>
-  a {
-    display: inline-block;
-    text-decoration: none;
-  }
-  a.active {
-    font-weight: bolder;
-    text-decoration: underline;
-  }
+	a {
+		display: inline-block;
+		text-decoration: none;
+	}
+	a.active {
+		font-weight: bolder;
+		text-decoration: underline;
+	}
 </style>

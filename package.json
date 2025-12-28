@@ -1,20 +1,31 @@
 {
-  "name": "algo-solutions-blog",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/mdx": "^4.3.13",
-    "@astrojs/rss": "^4.0.14",
-    "@astrojs/sitemap": "^3.6.0",
-    "astro": "^5.16.6",
-    "rehype-mathjax": "^7.1.0",
-    "remark-math": "^6.0.0",
-    "sharp": "^0.34.5"
-  }
+	"name": "algo-solutions-blog",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro",
+		"lint": "eslint .",
+		"format": "prettier --write ."
+	},
+	"dependencies": {
+		"@astrojs/mdx": "^4.3.13",
+		"@astrojs/rss": "^4.0.14",
+		"@astrojs/sitemap": "^3.6.0",
+		"astro": "^5.16.6",
+		"rehype-mathjax": "^7.1.0",
+		"remark-math": "^6.0.0",
+		"sharp": "^0.34.5"
+	},
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^8.50.1",
+		"@typescript-eslint/parser": "^8.50.1",
+		"eslint": "^9.39.2",
+		"eslint-plugin-astro": "^1.5.0",
+		"prettier": "^3.7.4",
+		"prettier-plugin-astro": "^0.14.1",
+		"typescript-eslint": "^8.50.1"
+	}
 }

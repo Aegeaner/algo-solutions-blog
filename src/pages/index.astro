@@ -1,72 +1,72 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Footer from "../components/Footer.astro";
-import Header from "../components/Header.astro";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 ---
 
 <!doctype html>
 <html lang="zh">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    <style>
-      .hero {
-        text-align: center;
-        padding: 4rem 0;
-      }
-      .hero h1 {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-      }
-      .subtitle {
-        font-size: 1.25rem;
-        color: rgb(var(--gray));
-        max-width: 600px;
-        margin: 0 auto;
-        line-height: 1.6;
-      }
-      .about-me {
-        padding: 2rem 0;
-      }
-      .icon {
-        margin-right: 0.5rem;
-      }
-      @media (max-width: 720px) {
-        .hero h1 {
-          font-size: 2.5rem;
-        }
-      }
-    </style>
-  </head>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			.hero {
+				text-align: center;
+				padding: 4rem 0;
+			}
+			.hero h1 {
+				font-size: 3rem;
+				margin-bottom: 1rem;
+			}
+			.subtitle {
+				font-size: 1.25rem;
+				color: rgb(var(--gray));
+				max-width: 600px;
+				margin: 0 auto;
+				line-height: 1.6;
+			}
+			.about-me {
+				padding: 2rem 0;
+			}
+			.icon {
+				margin-right: 0.5rem;
+			}
+			@media (max-width: 720px) {
+				.hero h1 {
+					font-size: 2.5rem;
+				}
+			}
+		</style>
+	</head>
 
-  <body>
-    <Header />
+	<body>
+		<Header />
 
-    <main class="container">
-      <section class="hero">
-        <h1>算法之旅航海志</h1>
+		<main class="container">
+			<section class="hero">
+				<h1>算法之旅航海志</h1>
 
-        <p>欢迎来到我的算法小站！</p>
-        <p class="subtitle">
-          欢迎深入探索问题解决之道。在这里，您可以找到针对竞技编程和实际挑战的详细报告、代码实现和复杂度分析。
-        </p>
-      </section>
+				<p>欢迎来到我的算法小站！</p>
+				<p class="subtitle">
+					欢迎深入探索问题解决之道。在这里，您可以找到针对竞技编程和实际挑战的详细报告、代码实现和复杂度分析。
+				</p>
+			</section>
 
-      <hr />
+			<hr />
 
-      <section class="about-me">
-        <h2>
-          <span class="icon">&#128104;&#8205;&#128187;</span> 博客简介
-        </h2>
-        <p>
-          本博客致力于记录各种算法背后的思路、实现细节和理论基础。
-          我的目标是创建清晰、可复现的报告，为其他开发者和算法竞赛选手提供有用的参考资料。
-          经常涵盖的主题包括动态规划、图论、数据结构和复杂度分析。
-        </p>
-      </section>
-    </main>
-    <Footer />
-  </body>
+			<section class="about-me">
+				<h2>
+					<span class="icon">&#128104;&#8205;&#128187;</span> 博客简介
+				</h2>
+				<p>
+					本博客致力于记录各种算法背后的思路、实现细节和理论基础。
+					我的目标是创建清晰、可复现的报告，为其他开发者和算法竞赛选手提供有用的参考资料。
+					经常涵盖的主题包括动态规划、图论、数据结构和复杂度分析。
+				</p>
+			</section>
+		</main>
+		<Footer />
+	</body>
 </html>
