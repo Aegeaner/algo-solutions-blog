@@ -16,7 +16,7 @@ const placeholders = [placeholder1, placeholder2, placeholder3, placeholder4, pl
 
 type Props = CollectionEntry<"blog">["data"] & { id?: string };
 
-const { title, description, pubDate, updatedDate, heroImage, id } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, id, problemLink } = Astro.props;
 
 function getCode(s: string) {
     let hash = 0;
@@ -77,6 +77,29 @@ const targetImage = placeholders[getCode(id || title) % placeholders.length];
         font-style: italic;
         font-size: 0.9rem;
       }
+      .problem-link {
+        display: inline-flex;
+        align-items: center;
+        margin-top: 1rem;
+        padding: 0.5rem 1rem;
+        background-color: var(--accent-bg);
+        color: var(--accent);
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        border: 1px solid transparent;
+      }
+      .problem-link:hover {
+        background-color: var(--accent);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(35, 55, 255, 0.2);
+      }
+      .problem-link svg {
+        margin-right: 0.5rem;
+      }
       hr {
         border: none;
         border-top: 1px solid rgb(var(--gray-light));
@@ -116,6 +139,12 @@ const targetImage = placeholders[getCode(id || title) % placeholders.length];
               }
             </div>
             <h1>{title}</h1>
+            {problemLink && (
+              <a href={problemLink} target="_blank" rel="noopener noreferrer" class="problem-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                View Original Problem
+              </a>
+            )}
             <hr />
           </div>
           <slot />
