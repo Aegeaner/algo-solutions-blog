@@ -1,81 +1,112 @@
 ---
-import { Image } from "astro:assets";
-import type { CollectionEntry } from "astro:content";
-import BaseHead from "../components/BaseHead.astro";
-import Footer from "../components/Footer.astro";
-import FormattedDate from "../components/FormattedDate.astro";
-import Header from "../components/Header.astro";
-import PostCover from "../components/PostCover.astro";
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import PostCover from '../components/PostCover.astro';
 
-type Props = CollectionEntry<"blog">["data"] & { id?: string };
+type Props = CollectionEntry<'blog'>['data'] & { id?: string };
 
 const { title, description, pubDate, updatedDate, heroImage, id, problemLink } = Astro.props;
 
 // Check if heroImage is a legacy placeholder (which we deleted)
-const isCustomImage = heroImage && !heroImage.src.includes("blog-placeholder");
+const isCustomImage = heroImage && !heroImage.src.includes('blog-placeholder');
 ---
 
 <html lang="en">
-  <head>
-    <BaseHead title={title} description={description} image={isCustomImage ? heroImage : undefined} />
-    <style>
-/* ... styles ... */
-      .hero-image svg {
-        display: block;
-        margin: 0 auto;
-        border-radius: 12px;
-        box-shadow: var(--box-shadow);
-        width: 100%;
-        height: auto;
-      }
-/* ... styles ... */
-    </style>
-	
-    <script 
-        id="MathJax-script" 
-        async 
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
-    ></script>
-  </head>
+	<head>
+		<BaseHead
+			title={title}
+			description={description}
+			image={isCustomImage ? heroImage : undefined}
+		/>
+		<style>
+			/* ... styles ... */
+			.hero-image svg {
+				display: block;
+				margin: 0 auto;
+				border-radius: 12px;
+				box-shadow: var(--box-shadow);
+				width: 100%;
+				height: auto;
+			}
+			/* ... styles ... */
+		</style>
 
-  <body>
-    <Header />
-    <main>
-      <article>
-        <div class="hero-image">
-          {
-            isCustomImage ? (
-              <Image width={1020} height={510} src={heroImage} alt="" />
-            ) : (
-              <PostCover id={id || title} pubDate={pubDate} width={1020} height={510} title={title} />
-            )
-          }
-        </div>
-        <div class="prose">
-          <div class="title">
-            <div class="date">
-              <FormattedDate date={pubDate} />
-              {
-                updatedDate && (
-                  <div class="last-updated-on">
-                    Last updated on <FormattedDate date={updatedDate} />
-                  </div>
-                )
-              }
-            </div>
-            <h1>{title}</h1>
-            {problemLink && (
-              <a href={problemLink} target="_blank" rel="noopener noreferrer" class="problem-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-                View Original Problem
-              </a>
-            )}
-            <hr />
-          </div>
-          <slot />
-        </div>
-      </article>
-    </main>
-    <Footer />
-  </body>
+		<script
+			id="MathJax-script"
+			async
+			src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	</head>
+
+	<body>
+		<Header />
+		<main>
+			<article>
+				<div class="hero-image">
+					{
+						isCustomImage ? (
+							<Image width={1020} height={510} src={heroImage} alt="" />
+						) : (
+							<PostCover
+								id={id || title}
+								pubDate={pubDate}
+								width={1020}
+								height={510}
+								title={title}
+							/>
+						)
+					}
+				</div>
+				<div class="prose">
+					<div class="title">
+						<div class="date">
+							<FormattedDate date={pubDate} />
+							{
+								updatedDate && (
+									<div class="last-updated-on">
+										Last updated on <FormattedDate date={updatedDate} />
+									</div>
+								)
+							}
+						</div>
+						<h1>{title}</h1>
+						{
+							problemLink && (
+								<a
+									href={problemLink}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="problem-link"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="16"
+										height="16"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<>
+											<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+											<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+										</>
+									</svg>
+									View Original Problem
+								</a>
+							)
+						}
+						<hr />
+					</div>
+					<slot />
+				</div>
+			</article>
+		</main>
+		<Footer />
+	</body>
 </html>

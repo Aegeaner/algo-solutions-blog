@@ -2,7 +2,6 @@
 title: '阶乘进制 (Factorial Number System)'
 description: '阶乘进制 (Factorial Number System) 原理介绍'
 pubDate: 'Nov 17 2025'
-heroImage: '../../assets/blog-placeholder-1.jpg'
 ---
 
 ## 阶乘进制 (FNS) 原理介绍

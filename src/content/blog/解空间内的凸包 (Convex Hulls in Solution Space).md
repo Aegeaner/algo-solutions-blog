@@ -2,7 +2,6 @@
 title: '解空间内的凸包 (Convex Hulls in Solution Space)'
 description: '解空间内的凸包 (Convex Hulls in Solution Space)'
 pubDate: 'Dec 28, 2025'
-heroImage: '../../assets/blog-placeholder-1.jpg'
 ---
 
 这一概念是计算机科学、数学优化（Optimization）以及计算几何（Computational Geometry）的核心基石。它不仅仅是一个几何形状，更是一种对“可能性”边界的根本性描述。理解它，需要从集合论、线性代数以及优化的本质出发。

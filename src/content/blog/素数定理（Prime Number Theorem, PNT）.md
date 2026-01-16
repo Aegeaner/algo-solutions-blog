@@ -1,10 +1,8 @@
 ---
-title: "素数定理（Prime Number Theorem, PNT）"
-description: "素数定理（Prime Number Theorem, PNT）"
-pubDate: "Jan 11, 2026"
-heroImage: "../../assets/blog-placeholder-1.jpg"
+title: '素数定理（Prime Number Theorem, PNT）'
+description: '素数定理（Prime Number Theorem, PNT）'
+pubDate: 'Jan 11, 2026'
 ---
-
 
 思考如何证明：前 $k$ 个素数的和（粗略估计）约为 $O(k^2 \ln k)$ 级别。
 
@@ -37,10 +35,10 @@ $$ p_n \sim n \ln n $$
 在渐进分析中，当 $k$ 很大时，离散的求和 $\sum$ 可以用连续的积分 $\int$ 来估算。这就像是用光滑的曲线下的面积来近似阶梯状柱状图的面积。
 
 我们的目标是估算：
-$$ S_k \approx \sum_{n=1}^{k} n \ln n $$
+$$ S*k \approx \sum*{n=1}^{k} n \ln n $$
 
 我们可以将其转化为对连续变量 $x$ 的积分：
-$$ S_k \approx \int_{1}^{k} x \ln x \, dx $$
+$$ S*k \approx \int*{1}^{k} x \ln x \, dx $$
 
 **推导步骤：**
 
@@ -53,7 +51,7 @@ $$ S_k \approx \int_{1}^{k} x \ln x \, dx $$
     $$ = \frac{1}{2} x^2 \ln x - \frac{1}{2} \int x \, dx $$
     $$ = \frac{1}{2} x^2 \ln x - \frac{1}{4} x^2 $$
 3.  **代入上下限：** 考虑上限 $k$（当 $k$ 很大时，下限 1 的贡献可以忽略不计）：
-    $$ \int_{1}^{k} x \ln x \, dx \approx \left[ \frac{1}{2} x^2 \ln x - \frac{1}{4} x^2 \right]_{1}^{k} $$
+    $$ \int*{1}^{k} x \ln x \, dx \approx \left[ \frac{1}{2} x^2 \ln x - \frac{1}{4} x^2 \right]*{1}^{k} $$
     $$ \approx \frac{1}{2} k^2 \ln k - \frac{1}{4} k^2 $$
 
 **主导项分析：**
@@ -76,14 +74,14 @@ $$ S_k = O(k^2 \ln k) $$
 我们直接对 $n \ln n$ 求和进行界定。
 
 **上界证明：**
-$$ S_k = \sum_{n=1}^{k} p_n \approx \sum_{n=1}^{k} n \ln n $$
+$$ S*k = \sum*{n=1}^{k} p*n \approx \sum*{n=1}^{k} n \ln n $$
 由于 $n \ln n$ 是单调递增函数，我们有：
-$$ \sum_{n=1}^{k} n \ln n \le \int_{1}^{k+1} x \ln x \, dx $$
+$$ \sum*{n=1}^{k} n \ln n \le \int*{1}^{k+1} x \ln x \, dx $$
 由前文积分结果知，该积分量级为 $O(k^2 \ln k)$。
 
 **下界证明：**
 我们取后半部分求和（从 $k/2$ 到 $k$）：
-$$ S_k \ge \sum_{n=\lceil k/2 \rceil}^{k} n \ln n $$
+$$ S*k \ge \sum*{n=\lceil k/2 \rceil}^{k} n \ln n $$
 对于这部分项，最小的项大约是 $\frac{k}{2} \ln \frac{k}{2}$。项数大约是 $k/2$。
 $$ S_k \ge \frac{k}{2} \cdot \left( \frac{k}{2} \ln \frac{k}{2} \right) = \frac{k^2}{4} (\ln k - \ln 2) $$
 这一项的量级同样是 $\Omega(k^2 \ln k)$。
@@ -97,13 +95,14 @@ $$ S_k \ge \frac{k}{2} \cdot \left( \frac{k}{2} \ln \frac{k}{2} \right) = \frac{
 为了加深理解，我们可以对比一下自然数的求和。
 前 $k$ 个自然数的和是 $\sum_{n=1}^k n \approx \frac{1}{2}k^2$。
 
-*   **自然数序列：** $1, 2, 3, \dots, k$。第 $n$ 个数就是 $n$。
-*   **素数序列：** $2, 3, 5, \dots, p_k$。第 $n$ 个数约为 $n \ln n$。
+- **自然数序列：** $1, 2, 3, \dots, k$。第 $n$ 个数就是 $n$。
+- **素数序列：** $2, 3, 5, \dots, p_k$。第 $n$ 个数约为 $n \ln n$。
 
 素数序列不仅包含了 $n$ 的线性增长因子，还包含了一个缓慢增长的“稀疏因子” $\ln n$。
 在求和过程中：
-*   $n$ 的线性部分经过积分（或求和）变成了 $k^2$（二次增长）。
-*   $\ln n$ 部分在积分过程中基本保持了 $\ln k$ 的形态（稍微修正了系数）。
+
+- $n$ 的线性部分经过积分（或求和）变成了 $k^2$（二次增长）。
+- $\ln n$ 部分在积分过程中基本保持了 $\ln k$ 的形态（稍微修正了系数）。
 
 因此，总和的增长速度比自然数求和稍微快一点点，多了一个 $\ln k$ 的因子。
 

@@ -2,7 +2,6 @@
 title: '弗罗贝尼乌斯硬币问题 (The Frobenius Coin Problem)'
 description: '弗罗贝尼乌斯硬币问题 (The Frobenius Coin Problem)'
 pubDate: 'Dec 25, 2025'
-heroImage: '../../assets/blog-placeholder-1.jpg'
 ---
 
 **弗罗贝尼乌斯硬币问题 (The Frobenius Coin Problem)**又称**硬币问题**或**麦乐鸡块问题** (McNugget Problem)，这是一个经典的数论和组合数学问题。它探讨的是：如果只有几种特定面额的硬币，我们无法凑出的最大金额是多少？

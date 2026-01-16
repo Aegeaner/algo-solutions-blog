@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
@@ -41,12 +40,18 @@ function resolveHref(href: string | URL) {
 				background: #fff;
 				border-radius: 12px;
 				overflow: hidden;
-				box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-				transition: transform 0.2s ease, box-shadow 0.2s ease;
+				box-shadow:
+					0 4px 6px -1px rgba(0, 0, 0, 0.1),
+					0 2px 4px -1px rgba(0, 0, 0, 0.06);
+				transition:
+					transform 0.2s ease,
+					box-shadow 0.2s ease;
 			}
 			ul li:hover {
 				transform: translateY(-4px);
-				box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+				box-shadow:
+					0 10px 15px -3px rgba(0, 0, 0, 0.1),
+					0 4px 6px -2px rgba(0, 0, 0, 0.05);
 			}
 			ul li * {
 				text-decoration: none;
@@ -57,14 +62,16 @@ function resolveHref(href: string | URL) {
 				margin-bottom: 2rem;
 				text-align: center;
 			}
-			ul li:first-child img, ul li:first-child svg {
+			ul li:first-child img,
+			ul li:first-child svg {
 				width: 100%;
 				height: auto;
 				aspect-ratio: 2 / 1;
 				object-fit: cover;
 				margin-bottom: 1rem;
 			}
-			ul li img, ul li svg {
+			ul li img,
+			ul li svg {
 				margin-bottom: 0.5rem;
 				border-radius: 12px 12px 0 0;
 				width: 100%;
@@ -74,7 +81,8 @@ function resolveHref(href: string | URL) {
 			ul li a {
 				display: block;
 			}
-			ul li:hover img, ul li:hover svg {
+			ul li:hover img,
+			ul li:hover svg {
 				/* box-shadow handled by li:hover now */
 			}
 			ul li:hover .title {
@@ -141,7 +149,13 @@ function resolveHref(href: string | URL) {
 						posts.map((post) => (
 							<li>
 								<a href={resolveHref(`/blog/${post.id}/`)}>
-									<PostCover id={post.id} pubDate={post.data.pubDate} width={720} height={360} title={post.data.title} />
+									<PostCover
+										id={post.id}
+										pubDate={post.data.pubDate}
+										width={720}
+										height={360}
+										title={post.data.title}
+									/>
 									<div class="post-content">
 										<p class="date">
 											<FormattedDate date={post.data.pubDate} />

@@ -2,7 +2,6 @@
 title: 'FFT（快速傅里叶变换）和 NTT（快速数论变换）'
 description: 'FFT（快速傅里叶变换）和 NTT（快速数论变换）'
 pubDate: 'Dec 24, 2025'
-heroImage: '../../assets/blog-placeholder-1.jpg'
 ---
 
 要理解 FFT（快速傅里叶变换）和 NTT（快速数论变换），首先必须理解它们试图解决的核心问题：**多项式乘法**（Polynomial Multiplication），或者更广泛地说，**卷积**（Convolution）。

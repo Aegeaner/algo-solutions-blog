@@ -2,30 +2,30 @@
 import { Random } from '../utils/rng';
 
 interface Props {
-    id: string;
-    pubDate?: Date | string;
-    width?: number;
-    height?: number;
-    title?: string; // Optional, can be used for accessibility or seeding
-    classList?: string; // Allow passing classes
+	id: string;
+	pubDate?: Date | string;
+	width?: number;
+	height?: number;
+	title?: string; // Optional, can be used for accessibility or seeding
+	classList?: string; // Allow passing classes
 }
 
-const { id, pubDate, width = 1200, height = 630, title = "", classList = "" } = Astro.props;
+const { id, pubDate, width = 1200, height = 630, title = '', classList = '' } = Astro.props;
 
 // 1. Initialize RNG with consistent seed
-const seedString = id + (pubDate ? new Date(pubDate).getTime().toString() : "");
+const seedString = id + (pubDate ? new Date(pubDate).getTime().toString() : '');
 const rng = new Random(seedString);
 
 // ==========================================
 // 🎨 Color & Theme Engine (Ported)
 // ==========================================
 const THEMES = [
-    { bg: ['#0f172a', '#1e293b'], primary: '#3b82f6', accent: '#60a5fa' }, // Classic Blue
-    { bg: ['#2e1065', '#4c1d95'], primary: '#a855f7', accent: '#d8b4fe' }, // Midnight Purple
-    { bg: ['#042f2e', '#115e59'], primary: '#14b8a6', accent: '#5eead4' }, // Abyssal Teal
-    { bg: ['#18181b', '#27272a'], primary: '#71717a', accent: '#a1a1aa' }, // Charcoal Grey
-    { bg: ['#1e1b4b', '#312e81'], primary: '#6366f1', accent: '#818cf8' }, // Deep Indigo
-    { bg: ['#450a0a', '#7f1d1d'], primary: '#f43f5e', accent: '#fb7185' }  // Dark Crimson
+	{ bg: ['#0f172a', '#1e293b'], primary: '#3b82f6', accent: '#60a5fa' }, // Classic Blue
+	{ bg: ['#2e1065', '#4c1d95'], primary: '#a855f7', accent: '#d8b4fe' }, // Midnight Purple
+	{ bg: ['#042f2e', '#115e59'], primary: '#14b8a6', accent: '#5eead4' }, // Abyssal Teal
+	{ bg: ['#18181b', '#27272a'], primary: '#71717a', accent: '#a1a1aa' }, // Charcoal Grey
+	{ bg: ['#1e1b4b', '#312e81'], primary: '#6366f1', accent: '#818cf8' }, // Deep Indigo
+	{ bg: ['#450a0a', '#7f1d1d'], primary: '#f43f5e', accent: '#fb7185' }, // Dark Crimson
 ];
 
 const theme = rng.pick(THEMES);
@@ -47,106 +47,106 @@ const NOISE_FILTER = `
 // ==========================================
 
 function generateWaves() {
-    let paths = '';
-    const layerCount = 6;
-    for (let i = 0; i < layerCount; i++) {
-        const t = i / (layerCount - 1);
-        const yBase = height * 0.4 + (height * 0.6 * t);
-        const color = i % 2 === 0 ? theme.primary : theme.accent;
-        
-        const points = [];
-        const segments = 3;
-        points.push({x: 0, y: yBase});
-        for(let j=1; j<=segments; j++) {
-            points.push({
-                x: (width / segments) * j,
-                y: yBase + rng.range(-80, 80) * (1-t)
-            });
-        }
-        
-        let d = `M 0 ${yBase}`;
-        for(let j=0; j<points.length-1; j++) {
-            const p0 = points[j];
-            const p1 = points[j+1];
-            const cp1x = p0.x + (p1.x - p0.x) * 0.5;
-            const cp1y = p0.y;
-            const cp2x = p0.x + (p1.x - p0.x) * 0.5;
-            const cp2y = p1.y;
-            d += ` C ${cp1x} ${cp1y} ${cp2x} ${cp2y} ${p1.x} ${p1.y}`;
-        }
-        d += ` L ${width} ${height} L 0 ${height} Z`;
+	let paths = '';
+	const layerCount = 6;
+	for (let i = 0; i < layerCount; i++) {
+		const t = i / (layerCount - 1);
+		const yBase = height * 0.4 + height * 0.6 * t;
+		const color = i % 2 === 0 ? theme.primary : theme.accent;
 
-        const opacity = 0.15 + (0.5 * t); 
-        paths += `<path d="${d}" fill="${color}" fill-opacity="${opacity}" style="mix-blend-mode: hard-light;" />`;
-    }
-    return paths;
+		const points = [];
+		const segments = 3;
+		points.push({ x: 0, y: yBase });
+		for (let j = 1; j <= segments; j++) {
+			points.push({
+				x: (width / segments) * j,
+				y: yBase + rng.range(-80, 80) * (1 - t),
+			});
+		}
+
+		let d = `M 0 ${yBase}`;
+		for (let j = 0; j < points.length - 1; j++) {
+			const p0 = points[j];
+			const p1 = points[j + 1];
+			const cp1x = p0.x + (p1.x - p0.x) * 0.5;
+			const cp1y = p0.y;
+			const cp2x = p0.x + (p1.x - p0.x) * 0.5;
+			const cp2y = p1.y;
+			d += ` C ${cp1x} ${cp1y} ${cp2x} ${cp2y} ${p1.x} ${p1.y}`;
+		}
+		d += ` L ${width} ${height} L 0 ${height} Z`;
+
+		const opacity = 0.15 + 0.5 * t;
+		paths += `<path d="${d}" fill="${color}" fill-opacity="${opacity}" style="mix-blend-mode: hard-light;" />`;
+	}
+	return paths;
 }
 
 function generateBlobs() {
-    let elements = '';
-    const blobCount = 5;
-    
-    // Create unique IDs for gradients/filters in this instance
-    const glowId = `glow-${rng.int(0, 100000)}`;
-    
-    // We append defs directly to the output stream in SVG, browsers handle multiple <defs> fine
-    elements += `<defs><filter id="${glowId}"><feGaussianBlur stdDeviation="30" /></filter></defs>`;
+	let elements = '';
+	const blobCount = 5;
 
-    for (let i = 0; i < blobCount; i++) {
-        const color = i === 0 ? theme.accent : theme.primary; 
-        const cx = rng.range(width * 0.2, width * 0.8);
-        const cy = rng.range(height * 0.2, height * 0.8);
-        const r = rng.range(150, 400);
+	// Create unique IDs for gradients/filters in this instance
+	const glowId = `glow-${rng.int(0, 100000)}`;
 
-        const gradId = `grad-${rng.int(0, 100000)}`;
-        elements += `<defs><radialGradient id="${gradId}">
+	// We append defs directly to the output stream in SVG, browsers handle multiple <defs> fine
+	elements += `<defs><filter id="${glowId}"><feGaussianBlur stdDeviation="30" /></filter></defs>`;
+
+	for (let i = 0; i < blobCount; i++) {
+		const color = i === 0 ? theme.accent : theme.primary;
+		const cx = rng.range(width * 0.2, width * 0.8);
+		const cy = rng.range(height * 0.2, height * 0.8);
+		const r = rng.range(150, 400);
+
+		const gradId = `grad-${rng.int(0, 100000)}`;
+		elements += `<defs><radialGradient id="${gradId}">
             <stop offset="0%" stop-color="${color}" stop-opacity="0.8"/>
             <stop offset="100%" stop-color="${color}" stop-opacity="0"/>
         </radialGradient></defs>`;
 
-        elements += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${gradId})" style="mix-blend-mode: screen;" />`;
-    }
-    
-    // Data points overlay
-    for(let k=0; k<12; k++) {
-        const cx = rng.range(0, width);
-        const cy = rng.range(0, height);
-        const size = rng.range(2, 6);
-        elements += `<circle cx="${cx}" cy="${cy}" r="${size}" fill="white" fill-opacity="0.3" />`;
-    }
-    return elements;
+		elements += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${gradId})" style="mix-blend-mode: screen;" />`;
+	}
+
+	// Data points overlay
+	for (let k = 0; k < 12; k++) {
+		const cx = rng.range(0, width);
+		const cy = rng.range(0, height);
+		const size = rng.range(2, 6);
+		elements += `<circle cx="${cx}" cy="${cy}" r="${size}" fill="white" fill-opacity="0.3" />`;
+	}
+	return elements;
 }
 
 function generateAurora() {
-    let elements = '';
-    const blurId = `blur-${rng.int(0, 100000)}`;
-    
-    elements += `<defs><filter id="${blurId}" x="-50%" y="-50%" width="200%" height="200%">
+	let elements = '';
+	const blurId = `blur-${rng.int(0, 100000)}`;
+
+	elements += `<defs><filter id="${blurId}" x="-50%" y="-50%" width="200%" height="200%">
         <feGaussianBlur stdDeviation="80" />
     </filter></defs>`;
-    
-    elements += `<g filter="url(#${blurId})">`;
-    elements += `<ellipse cx="20%" cy="20%" rx="600" ry="400" fill="${theme.bg[0]}" opacity="0.9" />`;
-    elements += `<ellipse cx="80%" cy="80%" rx="500" ry="400" fill="${theme.primary}" opacity="0.5" />`;
-    
-    const p1 = {x: rng.range(-100, 200), y: rng.range(height/2, height)};
-    const p2 = {x: rng.range(width/2, width), y: rng.range(0, height/2)};
-    const p3 = {x: width + 100, y: rng.range(0, height)};
-    
-    elements += `<path d="M ${p1.x} ${p1.y} Q ${p2.x} ${p2.y} ${p3.x} ${p3.y} L ${width} ${height} L 0 ${height} Z" 
-        fill="${theme.accent}" opacity="0.4" style="mix-blend-mode: hard-light;" />`;
-    
-    elements += `<circle cx="${rng.range(0, width)}" cy="${rng.range(0, height)}" r="200" fill="${theme.primary}" opacity="0.4" />`;
-    elements += `</g>`;
 
-    // Grid Pattern
-    const gridId = `grid-${rng.int(0, 100000)}`;
-    elements += `<defs><pattern id="${gridId}" width="100" height="100" patternUnits="userSpaceOnUse">
+	elements += `<g filter="url(#${blurId})">`;
+	elements += `<ellipse cx="20%" cy="20%" rx="600" ry="400" fill="${theme.bg[0]}" opacity="0.9" />`;
+	elements += `<ellipse cx="80%" cy="80%" rx="500" ry="400" fill="${theme.primary}" opacity="0.5" />`;
+
+	const p1 = { x: rng.range(-100, 200), y: rng.range(height / 2, height) };
+	const p2 = { x: rng.range(width / 2, width), y: rng.range(0, height / 2) };
+	const p3 = { x: width + 100, y: rng.range(0, height) };
+
+	elements += `<path d="M ${p1.x} ${p1.y} Q ${p2.x} ${p2.y} ${p3.x} ${p3.y} L ${width} ${height} L 0 ${height} Z" 
+        fill="${theme.accent}" opacity="0.4" style="mix-blend-mode: hard-light;" />`;
+
+	elements += `<circle cx="${rng.range(0, width)}" cy="${rng.range(0, height)}" r="200" fill="${theme.primary}" opacity="0.4" />`;
+	elements += `</g>`;
+
+	// Grid Pattern
+	const gridId = `grid-${rng.int(0, 100000)}`;
+	elements += `<defs><pattern id="${gridId}" width="100" height="100" patternUnits="userSpaceOnUse">
         <path d="M 100 0 L 0 0 0 100" fill="none" stroke="white" stroke-width="0.5" stroke-opacity="0.05"/>
     </pattern></defs>`;
-    elements += `<rect width="${width}" height="${height}" fill="url(#${gridId})" />`;
-    
-    return elements;
+	elements += `<rect width="${width}" height="${height}" fill="url(#${gridId})" />`;
+
+	return elements;
 }
 
 // ==========================================
@@ -160,31 +160,34 @@ const graphicContent = selectedAlgo();
 
 // Background Gradient ID
 const bgId = `bg-${rng.int(0, 100000)}`;
-
 ---
 
-<svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    viewBox={`0 0 ${width} ${height}`}
-    preserveAspectRatio="xMidYMid slice"
-    class={classList}
-    role="img"
-    aria-label={title ? `Cover image for ${title}` : "Generative abstract cover art"}
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	viewBox={`0 0 ${width} ${height}`}
+	preserveAspectRatio="xMidYMid slice"
+	class={classList}
+	role="img"
+	aria-label={title ? `Cover image for ${title}` : 'Generative abstract cover art'}
 >
-    <defs>
-        <linearGradient id={bgId} x1="0" y1="0" x2="0" y2="100%">
-            <stop offset="0%" stop-color={theme.bg[0]} />
-            <stop offset="100%" stop-color={theme.bg[1]} />
-        </linearGradient>
-        <Fragment set:html={NOISE_FILTER} />
-    </defs>
+	<defs>
+		<linearGradient id={bgId} x1="0" y1="0" x2="0" y2="100%">
+			<stop offset="0%" stop-color={theme.bg[0]}></stop>
+			<stop offset="100%" stop-color={theme.bg[1]}></stop>
+		</linearGradient>
+		<Fragment set:html={NOISE_FILTER} />
+	</defs>
 
-    {/* Base Background */}
-    <rect width={width} height={height} fill={`url(#${bgId})`} />
+	{/* Base Background */}
+	<rect width={width} height={height} fill={`url(#${bgId})`}></rect>
 
-    {/* Algorithm Content */}
-    <Fragment set:html={graphicContent} />
+	{/* Algorithm Content */}
+	<Fragment set:html={graphicContent} />
 
-    {/* Noise Overlay */}
-    <rect width={width} height={height} filter={`url(#${NOISE_FILTER_ID})`} style="mix-blend-mode: overlay;" />
+	{/* Noise Overlay */}
+	<rect
+		width={width}
+		height={height}
+		filter={`url(#${NOISE_FILTER_ID})`}
+		style="mix-blend-mode: overlay;"></rect>
 </svg>
