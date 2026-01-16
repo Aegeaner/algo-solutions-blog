@@ -1,0 +1,2 @@
+# Ignore all blog post markdown files to prevent Prettier from breaking LaTeX formulas
+src/content/blog/**/*.md
