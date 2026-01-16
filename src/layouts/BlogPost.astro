@@ -29,7 +29,7 @@ function getCode(s: string) {
     return Math.abs(hash);
 }
 
-const targetImage = placeholders[getCode(id || title) % placeholders.length];
+const displayImage = heroImage || placeholders[getCode(id || title) % placeholders.length];
 ---
 
 <html lang="en">
@@ -121,8 +121,8 @@ const targetImage = placeholders[getCode(id || title) % placeholders.length];
       <article>
         <div class="hero-image">
           {
-            targetImage && (
-              <Image width={1020} height={510} src={targetImage} alt="" />
+            displayImage && (
+              <Image width={1020} height={510} src={displayImage} alt="" />
             )
           }
         </div>
