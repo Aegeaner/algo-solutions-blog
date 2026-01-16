@@ -1,20 +1,21 @@
 ---
-import { Image } from "astro:assets";
-import type { CollectionEntry } from "astro:content";
-import type { MarkdownHeading } from "astro";
-import BaseHead from "../components/BaseHead.astro";
-import Footer from "../components/Footer.astro";
-import FormattedDate from "../components/FormattedDate.astro";
-import Header from "../components/Header.astro";
-import PostCover from "../components/PostCover.astro";
-import TableOfContents from "../components/TableOfContents.astro";
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import type { MarkdownHeading } from 'astro';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import PostCover from '../components/PostCover.astro';
+import TableOfContents from '../components/TableOfContents.astro';
 
-type Props = CollectionEntry<"blog">["data"] & { 
-  id?: string;
-  headings?: MarkdownHeading[];
+type Props = CollectionEntry<'blog'>['data'] & {
+	id?: string;
+	headings?: MarkdownHeading[];
 };
 
-const { title, description, pubDate, updatedDate, heroImage, id, problemLink, headings } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, id, problemLink, headings } =
+	Astro.props;
 
 const isCustomImage = heroImage && !heroImage.src.includes('blog-placeholder');
 ---
@@ -27,205 +28,208 @@ const isCustomImage = heroImage && !heroImage.src.includes('blog-placeholder');
 			image={isCustomImage ? heroImage : undefined}
 		/>
 		<style>
-      /* Global Dot Pattern Background */
-      body {
-        background-color: #fdfdfd;
-        background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
-        background-size: 24px 24px;
-        min-height: 100vh;
-      }
+			/* Global Dot Pattern Background */
+			body {
+				background-color: #fdfdfd;
+				background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+				background-size: 24px 24px;
+				min-height: 100vh;
+			}
 
-      /* Documentation Style Layout */
-      
-      /* Sidebar: Fixed to the left edge */
-      .sidebar {
-        display: none; /* Hidden on mobile */
-      }
-      
-      @media (min-width: 1024px) {
-        .sidebar {
-          display: block;
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 260px;
-          height: 100vh;
-          overflow-y: auto;
-          background: rgba(253, 253, 253, 0.8);
-          backdrop-filter: blur(8px);
-          border-right: 1px solid rgba(0,0,0,0.08);
-          padding: 2rem 1rem 2rem 2rem;
-          z-index: 10;
-        }
-      }
+			/* Documentation Style Layout */
 
-      /* Main Content Area */
-      main {
-        width: 100%;
-        padding: 1rem;
-        transition: margin-left 0.3s ease;
-      }
+			/* Sidebar: Fixed to the left edge */
+			.sidebar {
+				display: none; /* Hidden on mobile */
+			}
 
-      @media (min-width: 1024px) {
-        main {
-          margin-left: 260px; /* Leave space for fixed sidebar */
-          width: calc(100% - 260px); /* Fill remaining width */
-          display: flex;
-          justify-content: flex-start; /* Align content to the left, closer to TOC */
-          align-items: flex-start;
-          padding: 4rem 3rem; /* Adjusted padding */
-        }
-      }
+			@media (min-width: 1024px) {
+				.sidebar {
+					display: block;
+					position: fixed;
+					top: 0;
+					left: 0;
+					width: 260px;
+					height: 100vh;
+					overflow-y: auto;
+					background: rgba(253, 253, 253, 0.8);
+					backdrop-filter: blur(8px);
+					border-right: 1px solid rgba(0, 0, 0, 0.08);
+					padding: 2rem 1rem 2rem 2rem;
+					z-index: 10;
+				}
+			}
 
-      /* Mobile: Hide Sidebar, Show Inline TOC */
-      @media (max-width: 1023px) {
-        .sidebar {
-          display: none;
-        }
-        
-        main {
-          margin-left: 0;
-          width: 100%;
-          padding: 0; /* Remove container padding on mobile */
-        }
+			/* Main Content Area */
+			main {
+				width: 100%;
+				padding: 1rem;
+				transition: margin-left 0.3s ease;
+			}
 
-        /* Mobile "Bleed" Card Style */
-        article {
-          border-radius: 0;
-          box-shadow: none;
-          padding: 2rem 1.25rem; /* Tighter padding for mobile */
-          margin: 0;
-          border-bottom: 1px solid rgba(0,0,0,0.05); /* Subtle separator */
-        }
+			@media (min-width: 1024px) {
+				main {
+					margin-left: 260px; /* Leave space for fixed sidebar */
+					width: calc(100% - 260px); /* Fill remaining width */
+					display: flex;
+					justify-content: flex-start; /* Align content to the left, closer to TOC */
+					align-items: flex-start;
+					padding: 4rem 3rem; /* Adjusted padding */
+				}
+			}
 
-        .title h1 {
-          font-size: 2rem; /* Smaller heading on mobile */
-        }
-        
-        .hero-image {
-          border-radius: 0; /* Full bleed image */
-          margin-left: -1.25rem;
-          margin-right: -1.25rem;
-          width: calc(100% + 2.5rem);
-          margin-bottom: 2rem;
-        }
-      }
+			/* Mobile: Hide Sidebar, Show Inline TOC */
+			@media (max-width: 1023px) {
+				.sidebar {
+					display: none;
+				}
 
-      /* Desktop Only: Hide Mobile TOC */
-      @media (min-width: 1024px) {
-        .mobile-toc {
-          display: none;
-        }
-      }
-      
-      /* Mobile TOC Styling */
-      .mobile-toc {
-        margin: 2rem 0;
-        padding: 1.5rem;
-        background-color: #f9fafb;
-        border-radius: 8px;
-        border: 1px solid #e5e7eb;
-      }
-      
-      .mobile-toc summary {
-        font-weight: 700;
-        cursor: pointer;
-        color: var(--gray-dark);
-      }
+				main {
+					margin-left: 0;
+					width: 100%;
+					padding: 0; /* Remove container padding on mobile */
+				}
 
-      /* Article Styling */
-      article {
-        background: white;
-        border-radius: 12px;
-        padding: 4rem; /* More generous internal padding */
-        width: 100%;
-        max-width: 1280px; /* Scaled up for widescreen impact */
-        box-shadow: 0 4px 25px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.02);
-      }
+				/* Mobile "Bleed" Card Style */
+				article {
+					border-radius: 0;
+					box-shadow: none;
+					padding: 2rem 1.25rem; /* Tighter padding for mobile */
+					margin: 0;
+					border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Subtle separator */
+				}
 
-      .hero-image {
-        width: 100%;
-        margin-bottom: 3rem;
-        border-radius: 12px;
-        overflow: hidden;
-      }
+				.title h1 {
+					font-size: 2rem; /* Smaller heading on mobile */
+				}
 
-      .hero-image img, .hero-image svg {
-        display: block;
-        width: 100%;
-        height: auto;
-        aspect-ratio: 16 / 9; /* Standard cinematic ratio, perfect for 1280px width */
-        object-fit: cover;
-      }
-      
-      .prose {
-        width: 100%;
-        max-width: 960px; /* Wider prose for better code block display */
-        margin: auto;
-        color: rgb(var(--gray-dark));
-      }
+				.hero-image {
+					border-radius: 0; /* Full bleed image */
+					margin-left: -1.25rem;
+					margin-right: -1.25rem;
+					width: calc(100% + 2.5rem);
+					margin-bottom: 2rem;
+				}
+			}
 
-      .title {
-        margin-bottom: 1rem;
-        padding: 1rem 0;
-        text-align: center;
-        line-height: 1.2;
-      }
-      .title h1 {
-        margin: 0 0 0.5em 0;
-        font-size: 2.5rem;
-      }
-      .date {
-        margin-bottom: 1rem;
-        color: rgb(var(--gray));
-        font-size: 1.1rem;
-      }
-      .last-updated-on {
-        font-style: italic;
-        font-size: 0.9rem;
-      }
-      .problem-link {
-        display: inline-flex;
-        align-items: center;
-        margin-top: 1rem;
-        padding: 0.5rem 1rem;
-        background-color: var(--accent-bg);
-        color: var(--accent);
-        text-decoration: none;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 0.9rem;
-        transition: all 0.2s ease;
-        border: 1px solid transparent;
-      }
-      .problem-link:hover {
-        background-color: var(--accent);
-        color: white;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(35, 55, 255, 0.2);
-      }
-      .problem-link svg {
-        margin-right: 0.5rem;
-      }
-      hr {
-        border: none;
-        border-top: 1px solid rgb(var(--gray-light));
-        margin: 2rem auto;
-        width: 50%;
-      }
+			/* Desktop Only: Hide Mobile TOC */
+			@media (min-width: 1024px) {
+				.mobile-toc {
+					display: none;
+				}
+			}
 
-      /* Prose Overrides for Code Blocks */
-      .prose pre {
-        border-radius: 8px;
-        border: 1px solid var(--gray-light);
-      }
+			/* Mobile TOC Styling */
+			.mobile-toc {
+				margin: 2rem 0;
+				padding: 1.5rem;
+				background-color: #f9fafb;
+				border-radius: 8px;
+				border: 1px solid #e5e7eb;
+			}
 
-      /* MathJax Overflow Handling */
-      mjx-container {
-        overflow-x: auto;
-        overflow-y: hidden;
-        max-width: 100%;
-      }
+			.mobile-toc summary {
+				font-weight: 700;
+				cursor: pointer;
+				color: var(--gray-dark);
+			}
+
+			/* Article Styling */
+			article {
+				background: white;
+				border-radius: 12px;
+				padding: 4rem; /* More generous internal padding */
+				width: 100%;
+				max-width: 1280px; /* Scaled up for widescreen impact */
+				box-shadow:
+					0 4px 25px rgba(0, 0, 0, 0.03),
+					0 1px 3px rgba(0, 0, 0, 0.02);
+			}
+
+			.hero-image {
+				width: 100%;
+				margin-bottom: 3rem;
+				border-radius: 12px;
+				overflow: hidden;
+			}
+
+			.hero-image img,
+			.hero-image svg {
+				display: block;
+				width: 100%;
+				height: auto;
+				aspect-ratio: 16 / 9; /* Standard cinematic ratio, perfect for 1280px width */
+				object-fit: cover;
+			}
+
+			.prose {
+				width: 100%;
+				max-width: 960px; /* Wider prose for better code block display */
+				margin: auto;
+				color: rgb(var(--gray-dark));
+			}
+
+			.title {
+				margin-bottom: 1rem;
+				padding: 1rem 0;
+				text-align: center;
+				line-height: 1.2;
+			}
+			.title h1 {
+				margin: 0 0 0.5em 0;
+				font-size: 2.5rem;
+			}
+			.date {
+				margin-bottom: 1rem;
+				color: rgb(var(--gray));
+				font-size: 1.1rem;
+			}
+			.last-updated-on {
+				font-style: italic;
+				font-size: 0.9rem;
+			}
+			.problem-link {
+				display: inline-flex;
+				align-items: center;
+				margin-top: 1rem;
+				padding: 0.5rem 1rem;
+				background-color: var(--accent-bg);
+				color: var(--accent);
+				text-decoration: none;
+				border-radius: 8px;
+				font-weight: 600;
+				font-size: 0.9rem;
+				transition: all 0.2s ease;
+				border: 1px solid transparent;
+			}
+			.problem-link:hover {
+				background-color: var(--accent);
+				color: white;
+				transform: translateY(-2px);
+				box-shadow: 0 4px 12px rgba(35, 55, 255, 0.2);
+			}
+			.problem-link svg {
+				margin-right: 0.5rem;
+			}
+			hr {
+				border: none;
+				border-top: 1px solid rgb(var(--gray-light));
+				margin: 2rem auto;
+				width: 50%;
+			}
+
+			/* Prose Overrides for Code Blocks */
+			.prose pre {
+				border-radius: 8px;
+				border: 1px solid var(--gray-light);
+			}
+
+			/* MathJax Overflow Handling */
+			mjx-container {
+				overflow-x: auto;
+				overflow-y: hidden;
+				max-width: 100%;
+			}
 		</style>
 
 		<script
@@ -236,58 +240,89 @@ const isCustomImage = heroImage && !heroImage.src.includes('blog-placeholder');
 
 	<body>
 		<Header />
-		
-    <!-- Note: Header is usually global. If Header is fixed top, we might need to adjust Sidebar top/z-index -->
-    
-    <aside class="sidebar">
-        {headings && headings.length > 0 && <TableOfContents headings={headings} />}
-    </aside>
+
+		<!-- Note: Header is usually global. If Header is fixed top, we might need to adjust Sidebar top/z-index -->
+
+		<aside class="sidebar">
+			{headings && headings.length > 0 && <TableOfContents headings={headings} />}
+		</aside>
 
 		<main>
-      <article>
-          <div class="hero-image">
-          {
-              isCustomImage ? (
-              <Image width={1020} height={510} src={heroImage} alt="" />
-              ) : (
-              <PostCover id={id || title} pubDate={pubDate} width={1020} height={510} title={title} />
-              )
-          }
-          </div>
-          <div class="prose">
-              <div class="title">
-                  <div class="date">
-                  <FormattedDate date={pubDate} />
-                  {
-                      updatedDate && (
-                      <div class="last-updated-on">
-                          Last updated on <FormattedDate date={updatedDate} />
-                      </div>
-                      )
-                  }
-                  </div>
-                  <h1>{title}</h1>
-                  {problemLink && (
-                  <a href={problemLink} target="_blank" rel="noopener noreferrer" class="problem-link">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-                      View Original Problem
-                  </a>
-                  )}
-                                      <hr />
-                                  </div>
-                                  
-                                  {headings && headings.length > 0 && (
-                                    <div class="mobile-toc">
-                                      <details>
-                                        <summary>Table of Contents</summary>
-                                        <TableOfContents headings={headings} />
-                                      </details>
-                                    </div>
-                                  )}
-                  
-                                  <slot />
-                              </div>
-                          </article>		</main>
+			<article>
+				<div class="hero-image">
+					{
+						isCustomImage ? (
+							<Image width={1020} height={510} src={heroImage} alt="" />
+						) : (
+							<PostCover
+								id={id || title}
+								pubDate={pubDate}
+								width={1020}
+								height={510}
+								title={title}
+							/>
+						)
+					}
+				</div>
+				<div class="prose">
+					<div class="title">
+						<div class="date">
+							<FormattedDate date={pubDate} />
+							{
+								updatedDate && (
+									<div class="last-updated-on">
+										Last updated on <FormattedDate date={updatedDate} />
+									</div>
+								)
+							}
+						</div>
+						<h1>{title}</h1>
+						{
+							problemLink && (
+								<a
+									href={problemLink}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="problem-link"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="16"
+										height="16"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<>
+											<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+											<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+										</>
+									</svg>
+									View Original Problem
+								</a>
+							)
+						}
+						<hr />
+					</div>
+
+					{
+						headings && headings.length > 0 && (
+							<div class="mobile-toc">
+								<details>
+									<summary>Table of Contents</summary>
+									<TableOfContents headings={headings} />
+								</details>
+							</div>
+						)
+					}
+
+					<slot />
+				</div>
+			</article>
+		</main>
 		<Footer />
 	</body>
 </html>

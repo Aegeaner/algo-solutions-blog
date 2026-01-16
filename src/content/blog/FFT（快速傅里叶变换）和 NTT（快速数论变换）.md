@@ -64,15 +64,15 @@ $$ \omega_n = e^{i \frac{2\pi}{n}} = \cos(\frac{2\pi}{n}) + i\sin(\frac{2\pi}{n}
 我们要计算 $A(\omega_n^0), A(\omega_n^1), \dots, A(\omega_n^{n-1})$。
 假设 $n$ 是 2 的幂（如果不是，补零凑整）。
 将多项式 $A(x)$ 按系数下标的奇偶性拆分：
-$$ A(x) = (a*0 + a_2x^2 + \dots) + x(a_1 + a_3x^2 + \dots) $$
-令 $A*{even}(x) = a*0 + a_2x + \dots$ 和 $A*{odd}(x) = a*1 + a_3x + \dots$。
+$$ A(x) = (a_0 + a_2x^2 + \dots) + x(a_1 + a_3x^2 + \dots) $$
+令 $A_{even}(x) = a_0 + a_2x + \dots$ 和 $A_{odd}(x) = a_1 + a_3x + \dots$。
 则有：
-$$ A(x) = A*{even}(x^2) + x A\_{odd}(x^2) $$
+$$ A(x) = A_{even}(x^2) + x A_{odd}(x^2) $$
 
 代入单位根 $\omega_n^k$：
-$$ A(\omega*n^k) = A*{even}(\omega*n^{2k}) + \omega_n^k A*{odd}(\omega*n^{2k}) $$
+$$ A(\omega_n^k) = A_{even}(\omega_n^{2k}) + \omega_n^k A_{odd}(\omega_n^{2k}) $$
 利用折半引理 $\omega_n^{2k} = \omega*{n/2}^k$：
-$$ A(\omega*n^k) = A*{even}(\omega*{n/2}^k) + \omega_n^k A*{odd}(\omega\_{n/2}^k) $$
+$$ A(\omega_n^k) = A_{even}(\omega_{n/2}^k) + \omega_n^k A_{odd}(\omega_{n/2}^k) $$
 
 **结论：** 原本规模为 $n$ 的问题，被转化为了两个规模为 $n/2$ 的子问题（求 $A_{even}$ 和 $A_{odd}$ 在 $n/2$ 次单位根上的值）。
 这就是经典的递归结构：$T(n) = 2T(n/2) + O(n)$，解得 $T(n) = O(n \log n)$。

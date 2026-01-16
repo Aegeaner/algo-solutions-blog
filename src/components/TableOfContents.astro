@@ -12,7 +12,7 @@ const toc = headings.filter((h) => h.depth > 1 && h.depth < 4);
 ---
 
 <nav class="toc">
-    <div class="toc-title">ON THIS PAGE</div>
+	<div class="toc-title">ON THIS PAGE</div>
 	<ul>
 		{
 			toc.map((heading) => (
@@ -27,25 +27,25 @@ const toc = headings.filter((h) => h.depth > 1 && h.depth < 4);
 <style>
 	.toc {
 		/* Fixed positioning handled by parent .sidebar */
-        width: 100%;
+		width: 100%;
 		font-size: 0.9rem;
-        /* Ensure links are clickable and distinct */
+		/* Ensure links are clickable and distinct */
 	}
-    
-    .toc-title {
-        font-weight: 700;
-        font-size: 0.75rem;
-        letter-spacing: 0.05em;
-        color: var(--gray);
-        margin-bottom: 1rem;
-        text-transform: uppercase;
-        padding-left: 0.5rem; /* Align with links */
-    }
+
+	.toc-title {
+		font-weight: 700;
+		font-size: 0.75rem;
+		letter-spacing: 0.05em;
+		color: var(--gray);
+		margin-bottom: 1rem;
+		text-transform: uppercase;
+		padding-left: 0.5rem; /* Align with links */
+	}
 
 	ul {
 		list-style: none;
 		padding: 0;
-        margin: 0;
+		margin: 0;
 	}
 
 	li {
@@ -57,47 +57,52 @@ const toc = headings.filter((h) => h.depth > 1 && h.depth < 4);
 		text-decoration: none;
 		display: block;
 		line-height: 1.4;
-		transition: color 0.2s ease, border-left 0.2s ease;
-        border-left: 2px solid transparent;
-        padding-left: 0.75rem;
+		transition:
+			color 0.2s ease,
+			border-left 0.2s ease;
+		border-left: 2px solid transparent;
+		padding-left: 0.75rem;
 	}
 
 	a:hover {
 		color: var(--accent);
 	}
 
-    /* Indentation for hierarchy */
+	/* Indentation for hierarchy */
 	.depth-3 {
 		padding-left: 1rem;
-        font-size: 0.85rem;
+		font-size: 0.85rem;
 	}
 
-    /* Active state styling (applied via JS) */
-    .active {
-        color: var(--accent);
-        border-left-color: var(--accent);
-        font-weight: 500;
-    }
+	/* Active state styling (applied via JS) */
+	.active {
+		color: var(--accent);
+		border-left-color: var(--accent);
+		font-weight: 500;
+	}
 </style>
 
 <script>
-    // Simple Intersection Observer to highlight active TOC item
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            const id = entry.target.getAttribute('id');
-            const link = document.querySelector(`.toc a[href="#${id}"]`);
-            
-            if (entry.isIntersecting) {
-                // Remove active from all
-                document.querySelectorAll('.toc a').forEach(a => a.classList.remove('active'));
-                // Add to current
-                link?.classList.add('active');
-            }
-        });
-    }, { rootMargin: '-100px 0px -66% 0px' }); // Highlight when element is near top
+	// Simple Intersection Observer to highlight active TOC item
+	const observer = new IntersectionObserver(
+		(entries) => {
+			entries.forEach((entry) => {
+				const id = entry.target.getAttribute('id');
+				const link = document.querySelector(`.toc a[href="#${id}"]`);
 
-    // Track all headings in main content
-    document.querySelectorAll('main h2, main h3').forEach((h) => {
-        observer.observe(h);
-    });
+				if (entry.isIntersecting) {
+					// Remove active from all
+					document.querySelectorAll('.toc a').forEach((a) => a.classList.remove('active'));
+					// Add to current
+					link?.classList.add('active');
+				}
+			});
+		},
+		{ rootMargin: '-100px 0px -66% 0px' }
+	); // Highlight when element is near top
+
+	// Track all headings in main content
+	document.querySelectorAll('main h2, main h3').forEach((h) => {
+		observer.observe(h);
+	});
 </script>

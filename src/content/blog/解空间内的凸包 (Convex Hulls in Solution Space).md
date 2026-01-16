@@ -70,9 +70,9 @@ pubDate: 'Dec 28, 2025'
 ## 步骤 2：凸组合 (Convex Combination)
 
 理解凸包的关键在于理解凸组合。任意点 $x$ 如果位于 $P$ 的凸包内，它必须能表示为：
-$$ x = \sum*{i=1}^{k} \alpha_i p_i $$
+$$ x = \sum_{i=1}^{k} \alpha_i p_i $$
 满足约束：
-$$ \sum*{i=1}^{k} \alpha_i = 1, \quad \alpha_i \ge 0 $$
+$$ \sum_{i=1}^{k} \alpha_i = 1, \quad \alpha_i \ge 0 $$
 这里的 $\alpha_i$ 可以理解为权重。这说明凸包内的任何点，本质上都是边缘点的加权平均。
 
 ## 步骤 3：构建边界 (Constructing the Boundary)

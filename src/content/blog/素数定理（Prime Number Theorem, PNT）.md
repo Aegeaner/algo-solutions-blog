@@ -35,10 +35,10 @@ $$ p_n \sim n \ln n $$
 在渐进分析中，当 $k$ 很大时，离散的求和 $\sum$ 可以用连续的积分 $\int$ 来估算。这就像是用光滑的曲线下的面积来近似阶梯状柱状图的面积。
 
 我们的目标是估算：
-$$ S*k \approx \sum*{n=1}^{k} n \ln n $$
+$$ S_k \approx \sum_{n=1}^{k} n \ln n $$
 
 我们可以将其转化为对连续变量 $x$ 的积分：
-$$ S*k \approx \int*{1}^{k} x \ln x \, dx $$
+$$ S_k \approx \int_{1}^{k} x \ln x \, dx $$
 
 **推导步骤：**
 
@@ -51,7 +51,7 @@ $$ S*k \approx \int*{1}^{k} x \ln x \, dx $$
     $$ = \frac{1}{2} x^2 \ln x - \frac{1}{2} \int x \, dx $$
     $$ = \frac{1}{2} x^2 \ln x - \frac{1}{4} x^2 $$
 3.  **代入上下限：** 考虑上限 $k$（当 $k$ 很大时，下限 1 的贡献可以忽略不计）：
-    $$ \int*{1}^{k} x \ln x \, dx \approx \left[ \frac{1}{2} x^2 \ln x - \frac{1}{4} x^2 \right]*{1}^{k} $$
+    $$ \int_{1}^{k} x \ln x \, dx \approx \left[ \frac{1}{2} x^2 \ln x - \frac{1}{4} x^2 \right]_{1}^{k} $$
     $$ \approx \frac{1}{2} k^2 \ln k - \frac{1}{4} k^2 $$
 
 **主导项分析：**
@@ -74,14 +74,14 @@ $$ S_k = O(k^2 \ln k) $$
 我们直接对 $n \ln n$ 求和进行界定。
 
 **上界证明：**
-$$ S*k = \sum*{n=1}^{k} p*n \approx \sum*{n=1}^{k} n \ln n $$
+$$ S_k = \sum_{n=1}^{k} p_n \approx \sum_{n=1}^{k} n \ln n $$
 由于 $n \ln n$ 是单调递增函数，我们有：
-$$ \sum*{n=1}^{k} n \ln n \le \int*{1}^{k+1} x \ln x \, dx $$
+$$ \sum_{n=1}^{k} n \ln n \le \int_{1}^{k+1} x \ln x \, dx $$
 由前文积分结果知，该积分量级为 $O(k^2 \ln k)$。
 
 **下界证明：**
 我们取后半部分求和（从 $k/2$ 到 $k$）：
-$$ S*k \ge \sum*{n=\lceil k/2 \rceil}^{k} n \ln n $$
+$$ S_k \ge \sum_{n=\lceil k/2 \rceil}^{k} n \ln n $$
 对于这部分项，最小的项大约是 $\frac{k}{2} \ln \frac{k}{2}$。项数大约是 $k/2$。
 $$ S_k \ge \frac{k}{2} \cdot \left( \frac{k}{2} \ln \frac{k}{2} \right) = \frac{k^2}{4} (\ln k - \ln 2) $$
 这一项的量级同样是 $\Omega(k^2 \ln k)$。
