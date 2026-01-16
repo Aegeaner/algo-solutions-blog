@@ -163,6 +163,13 @@ const isCustomImage = heroImage && !heroImage.src.includes('blog-placeholder');
         border-radius: 8px;
         border: 1px solid var(--gray-light);
       }
+
+      /* MathJax Overflow Handling */
+      mjx-container {
+        overflow-x: auto;
+        overflow-y: hidden;
+        max-width: 100%;
+      }
 		</style>
 
 		<script
