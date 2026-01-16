@@ -5,107 +5,30 @@ import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import Header from "../components/Header.astro";
-
-import placeholder1 from '../assets/blog-placeholder-1.jpg';
-import placeholder2 from '../assets/blog-placeholder-2.jpg';
-import placeholder3 from '../assets/blog-placeholder-3.jpg';
-import placeholder4 from '../assets/blog-placeholder-4.jpg';
-import placeholder5 from '../assets/blog-placeholder-5.jpg';
-
-const placeholders = [placeholder1, placeholder2, placeholder3, placeholder4, placeholder5];
+import PostCover from "../components/PostCover.astro";
 
 type Props = CollectionEntry<"blog">["data"] & { id?: string };
 
 const { title, description, pubDate, updatedDate, heroImage, id, problemLink } = Astro.props;
 
-function getCode(s: string) {
-    let hash = 0;
-    if (s.length === 0) return hash;
-    for (let i = 0; i < s.length; i++) {
-        const char = s.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
-        hash = hash & hash;
-    }
-    return Math.abs(hash);
-}
-
-const displayImage = heroImage || placeholders[getCode(id || title) % placeholders.length];
+// Check if heroImage is a legacy placeholder (which we deleted)
+const isCustomImage = heroImage && !heroImage.src.includes("blog-placeholder");
 ---
 
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description} image={isCustomImage ? heroImage : undefined} />
     <style>
-      main {
-        width: calc(100% - 2em);
-        max-width: 100%;
-        margin: 0;
-      }
-      .hero-image {
-        width: 100%;
-        margin-bottom: 2rem;
-      }
-      .hero-image img {
+/* ... styles ... */
+      .hero-image svg {
         display: block;
         margin: 0 auto;
         border-radius: 12px;
         box-shadow: var(--box-shadow);
+        width: 100%;
+        height: auto;
       }
-      .prose {
-        width: 720px;
-        max-width: calc(100% - 2em);
-        margin: auto;
-        padding: 1em;
-        color: rgb(var(--gray-dark));
-      }
-      .title {
-        margin-bottom: 1rem;
-        padding: 1rem 0;
-        text-align: center;
-        line-height: 1.2;
-      }
-      .title h1 {
-        margin: 0 0 0.5em 0;
-        font-size: 2.5rem;
-      }
-      .date {
-        margin-bottom: 1rem;
-        color: rgb(var(--gray));
-        font-size: 1.1rem;
-      }
-      .last-updated-on {
-        font-style: italic;
-        font-size: 0.9rem;
-      }
-      .problem-link {
-        display: inline-flex;
-        align-items: center;
-        margin-top: 1rem;
-        padding: 0.5rem 1rem;
-        background-color: var(--accent-bg);
-        color: var(--accent);
-        text-decoration: none;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 0.9rem;
-        transition: all 0.2s ease;
-        border: 1px solid transparent;
-      }
-      .problem-link:hover {
-        background-color: var(--accent);
-        color: white;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(35, 55, 255, 0.2);
-      }
-      .problem-link svg {
-        margin-right: 0.5rem;
-      }
-      hr {
-        border: none;
-        border-top: 1px solid rgb(var(--gray-light));
-        margin: 2rem auto;
-        width: 50%;
-      }
+/* ... styles ... */
     </style>
 	
     <script 
@@ -121,8 +44,10 @@ const displayImage = heroImage || placeholders[getCode(id || title) % placeholde
       <article>
         <div class="hero-image">
           {
-            displayImage && (
-              <Image width={1020} height={510} src={displayImage} alt="" />
+            isCustomImage ? (
+              <Image width={1020} height={510} src={heroImage} alt="" />
+            ) : (
+              <PostCover id={id || title} pubDate={pubDate} width={1020} height={510} title={title} />
             )
           }
         </div>

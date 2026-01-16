@@ -6,14 +6,7 @@ import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
-
-import placeholder1 from '../../assets/blog-placeholder-1.jpg';
-import placeholder2 from '../../assets/blog-placeholder-2.jpg';
-import placeholder3 from '../../assets/blog-placeholder-3.jpg';
-import placeholder4 from '../../assets/blog-placeholder-4.jpg';
-import placeholder5 from '../../assets/blog-placeholder-5.jpg';
-
-const placeholders = [placeholder1, placeholder2, placeholder3, placeholder4, placeholder5];
+import PostCover from '../../components/PostCover.astro';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -24,17 +17,6 @@ const base = import.meta.env.BASE_URL;
 function resolveHref(href: string | URL) {
 	const hrefStr = typeof href === 'string' ? href : href instanceof URL ? href.toString() : '/';
 	return hrefStr.startsWith('http') ? hrefStr : `${base}${hrefStr.replace(/^\/+/, '')}`;
-}
-
-function getCode(s: string) {
-	let hash = 0;
-	if (s.length === 0) return hash;
-	for (let i = 0; i < s.length; i++) {
-		const char = s.charCodeAt(i);
-		hash = ((hash << 5) - hash) + char;
-		hash = hash & hash;
-	}
-	return Math.abs(hash);
 }
 ---
 
@@ -75,14 +57,14 @@ function getCode(s: string) {
 				margin-bottom: 2rem;
 				text-align: center;
 			}
-			ul li:first-child img {
+			ul li:first-child img, ul li:first-child svg {
 				width: 100%;
 				height: auto;
 				aspect-ratio: 2 / 1;
 				object-fit: cover;
 				margin-bottom: 1rem;
 			}
-			ul li img {
+			ul li img, ul li svg {
 				margin-bottom: 0.5rem;
 				border-radius: 12px 12px 0 0;
 				width: 100%;
@@ -92,7 +74,7 @@ function getCode(s: string) {
 			ul li a {
 				display: block;
 			}
-			ul li:hover img {
+			ul li:hover img, ul li:hover svg {
 				/* box-shadow handled by li:hover now */
 			}
 			ul li:hover .title {
@@ -156,13 +138,10 @@ function getCode(s: string) {
 			<section>
 				<ul>
 					{
-						posts.map((post) => {
-							const targetImage = placeholders[getCode(post.id) % placeholders.length];
-
-							return (
+						posts.map((post) => (
 							<li>
 								<a href={resolveHref(`/blog/${post.id}/`)}>
-									<Image width={720} height={360} src={targetImage} alt="" />
+									<PostCover id={post.id} pubDate={post.data.pubDate} width={720} height={360} title={post.data.title} />
 									<div class="post-content">
 										<p class="date">
 											<FormattedDate date={post.data.pubDate} />
@@ -172,7 +151,7 @@ function getCode(s: string) {
 									</div>
 								</a>
 							</li>
-						)})
+						))
 					}
 				</ul>
 			</section>
