@@ -77,6 +77,62 @@ const isCustomImage = heroImage && !heroImage.src.includes('blog-placeholder');
         }
       }
 
+      /* Mobile: Hide Sidebar, Show Inline TOC */
+      @media (max-width: 1023px) {
+        .sidebar {
+          display: none;
+        }
+        
+        main {
+          margin-left: 0;
+          width: 100%;
+          padding: 0; /* Remove container padding on mobile */
+        }
+
+        /* Mobile "Bleed" Card Style */
+        article {
+          border-radius: 0;
+          box-shadow: none;
+          padding: 2rem 1.25rem; /* Tighter padding for mobile */
+          margin: 0;
+          border-bottom: 1px solid rgba(0,0,0,0.05); /* Subtle separator */
+        }
+
+        .title h1 {
+          font-size: 2rem; /* Smaller heading on mobile */
+        }
+        
+        .hero-image {
+          border-radius: 0; /* Full bleed image */
+          margin-left: -1.25rem;
+          margin-right: -1.25rem;
+          width: calc(100% + 2.5rem);
+          margin-bottom: 2rem;
+        }
+      }
+
+      /* Desktop Only: Hide Mobile TOC */
+      @media (min-width: 1024px) {
+        .mobile-toc {
+          display: none;
+        }
+      }
+      
+      /* Mobile TOC Styling */
+      .mobile-toc {
+        margin: 2rem 0;
+        padding: 1.5rem;
+        background-color: #f9fafb;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+      }
+      
+      .mobile-toc summary {
+        font-weight: 700;
+        cursor: pointer;
+        color: var(--gray-dark);
+      }
+
       /* Article Styling */
       article {
         background: white;
@@ -217,12 +273,21 @@ const isCustomImage = heroImage && !heroImage.src.includes('blog-placeholder');
                       View Original Problem
                   </a>
                   )}
-                  <hr />
-              </div>
-              <slot />
-          </div>
-      </article>
-		</main>
+                                      <hr />
+                                  </div>
+                                  
+                                  {headings && headings.length > 0 && (
+                                    <div class="mobile-toc">
+                                      <details>
+                                        <summary>Table of Contents</summary>
+                                        <TableOfContents headings={headings} />
+                                      </details>
+                                    </div>
+                                  )}
+                  
+                                  <slot />
+                              </div>
+                          </article>		</main>
 		<Footer />
 	</body>
 </html>
